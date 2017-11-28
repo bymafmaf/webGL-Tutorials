@@ -39,7 +39,7 @@ window.onload = function () {
     screenSize = [canvas.width, canvas.height];
 
     gl.viewport(0, 0, screenSize[0], screenSize[1]);
-    gl.clearColor(0, 1.0, 0, 1);
+    gl.clearColor(0.7, 0.2, 0, 1);
 
     OBJ.downloadMeshes({
       'plane': 'plane.obj',
@@ -74,14 +74,18 @@ document.onkeydown = function(key){
   console.log(key.keyCode);
   if (key.keyCode == 39) {
     displacement = mult(displacement, translate(0.1, 0, 0));
+    at[0] += 0.1;
   }
   else if (key.keyCode == 37) {
     displacement = mult(displacement, translate(-0.1, 0, 0));
+    at[0] -= 0.1;
   }
   else if (key.keyCode == 38) {
     displacement = mult(displacement, translate(0, 0, -0.1));
+    at[2] -= 0.1;
   }
   else if (key.keyCode == 40) {
     displacement = mult(displacement, translate(0, 0, 0.1));
+    at[2] += 0.1;
   }
 }
