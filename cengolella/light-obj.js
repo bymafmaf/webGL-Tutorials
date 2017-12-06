@@ -3,7 +3,7 @@ var plane;
 var block;
 var models = {};
 
-var lightPos = vec3(0, 5, 7);
+var lightPos = vec3(0, 5, 0);
 
 var at = vec3(0, 0, 0);
 var eye = vec3(0, 0, 10);
@@ -59,7 +59,7 @@ const gameLoop = function () {
       view = lookAt(add(at, toCam), at, [0, 1, 0]);
       proj = perspective(45, screenSize[0] / screenSize[1], 0.1, 30);
 
-      console.log(lightPos);
+      //console.log(lightPos);
       //console.log(displacement);
       plane.draw(eye, lightPos, mult(proj,view));
       sphere.draw(eye, lightPos, mult(proj,view), displacement);
