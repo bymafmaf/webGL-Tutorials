@@ -11,6 +11,8 @@ var eye = vec3(0, 10, 10);
 var toCam = subtract(eye, at);
 var proj;
 var view;
+var leftNum = 0;
+var rightNum = 0;
 
 var GAME_SPEED = 1000;
 
@@ -22,7 +24,7 @@ function modelLoad(meshes) {
     OBJ.initMeshBuffers(gl, models.meshes.block);
 
     plane = new Road(models.meshes.plane, mult(mat4(), translate(0,-2.5,-2)));
-    player = new Player(models.meshes.player);
+    player = new Player(models.meshes.player, mat4(), toCam);
     block = new Gate(models.meshes.block, mult(translate(2.5, -2.5, -5), rotateY(90)));
     things.push(plane);
     things.push(player);
@@ -56,10 +58,9 @@ var gameEnded = false;
 const gameLoop = function () {
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.enable(gl.DEPTH_TEST);
-
     if (!gameEnded) {
       at = player.getPosition();
-      view = lookAt(add(at, toCam), at, [0, 1, 0]);
+      view = lookAt(add(at, player.moveCamera()), at, [0, 1, 0]);
       proj = perspective(45, screenSize[0] / screenSize[1], 0.1, 30);
 
       for (let object of things) {
@@ -75,16 +76,32 @@ const gameLoop = function () {
 
 document.onkeydown = function(key){
   //console.log(key.keyCode);
+
   if (key.keyCode == 39) {
-    toCam = player.steerLeft(toCam);
+    player.leftDown();
   }
   else if (key.keyCode == 37) {
-    toCam = player.steerRight(toCam);
+    player.rightDown();
   }
   else if (key.keyCode == 38) {
-    player.moveForward();
+    player.upDown();
   }
   else if (key.keyCode == 40) {
-    player.moveBackward();
+    player.downDown();
+  }
+}
+
+document.onkeyup = function(key){
+  if (key.keyCode == 39) {
+    player.leftUp();
+  }
+  else if (key.keyCode == 37) {
+    player.rightUp();
+  }
+  else if (key.keyCode == 38) {
+    player.upUp();
+  }
+  else if (key.keyCode == 40) {
+    player.downUp();
   }
 }
