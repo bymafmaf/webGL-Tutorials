@@ -6,13 +6,12 @@ var models = {};
 var lightPos = vec3(0, 5, 10);
 
 var at = vec3(0, 0, 0);
-var eye = vec3(0, 0, 10);
+var eye = vec3(0, 20, 10);
 var toCam = subtract(eye, at);
 var proj;
 var view;
 
-var displacement = mult(mat4(), translate(0, -1, 5));
-
+var GAME_SPEED = 1000;
 
 function modelLoad(meshes) {
     models.meshes = meshes;
@@ -22,7 +21,7 @@ function modelLoad(meshes) {
     OBJ.initMeshBuffers(gl, models.meshes.block);
 
     plane = new GameObject(models.meshes.plane, mult(mat4(), translate(0,-2.5,-2)));
-    sphere = new GameObject(models.meshes.sphere);
+    sphere = new Player(models.meshes.sphere, mat4());
     block = new GameObject(models.meshes.block, mult(mat4(), translate(5, -2.5, 0)));
 
     gameLoop();
@@ -43,7 +42,7 @@ window.onload = function () {
 
     OBJ.downloadMeshes({
       'plane': 'plane.obj',
-      'sphere': 'sphere.obj',
+      'sphere': 'long-quad.obj',
       'block': 'block.obj'
     }, modelLoad);
 
@@ -59,10 +58,8 @@ const gameLoop = function () {
       view = lookAt(add(at, toCam), at, [0, 1, 0]);
       proj = perspective(45, screenSize[0] / screenSize[1], 0.1, 30);
 
-      //console.log(lightPos);
-      //console.log(displacement);
       plane.draw(eye, lightPos, mult(proj,view));
-      sphere.draw(eye, lightPos, mult(proj,view), displacement);
+      sphere.draw(eye, lightPos, mult(proj,view));
       block.draw(eye, lightPos, mult(proj,view));
 
       window.requestAnimationFrame(gameLoop);
@@ -75,23 +72,15 @@ const gameLoop = function () {
 document.onkeydown = function(key){
   console.log(key.keyCode);
   if (key.keyCode == 39) {
-    displacement = mult(displacement, translate(0.1, 0, 0));
-    at[0] += 0.1;
-    eye[0] += 0.1;
+    sphere.steerLeft();
   }
   else if (key.keyCode == 37) {
-    displacement = mult(displacement, translate(-0.1, 0, 0));
-    at[0] -= 0.1;
-    eye[0] -= 0.1;
+    sphere.steerRight();
   }
   else if (key.keyCode == 38) {
-    displacement = mult(displacement, translate(0, 0, -0.1));
-    at[2] -= 0.1;
-    eye[2] -= 0.1;
+    sphere.moveForward();
   }
   else if (key.keyCode == 40) {
-    displacement = mult(displacement, translate(0, 0, 0.1));
-    at[2] += 0.1;
-    eye[2] += 0.1;
+    sphere.moveBackward();
   }
 }

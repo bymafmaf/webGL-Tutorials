@@ -26,7 +26,6 @@ class GameObject
 
         gl.useProgram(this.program);
 
-
         gl.uniformMatrix4fv(this.program.model, false, flatten(model));
         gl.uniformMatrix4fv(this.program.viewProjection, false, flatten(viewProjection));
         gl.uniform3f(this.program.lightPos, lightPos[0], lightPos[1], lightPos[2]);
@@ -40,5 +39,6 @@ class GameObject
 
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.mesh.indexBuffer);
         gl.drawElements(gl.TRIANGLES, this.mesh.indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
+
     }
 }
