@@ -2,7 +2,8 @@ class GameObject
 {
     constructor(mesh, position){
         var program = initShaders(gl, 'vertex-shader-object', 'fragment-shader-object');
-        program.mvp = gl.getUniformLocation(program, "mvp");
+        program.model = gl.getUniformLocation(program, "model");
+        program.viewProjection = gl.getUniformLocation(program, "viewProjection");
         program.lightPos = gl.getUniformLocation(program, "lightPos");
         program.cameraPos = gl.getUniformLocation(program, "cameraPos");
         program.screenSize = gl.getUniformLocation(program, "screenSize");
@@ -26,7 +27,8 @@ class GameObject
         gl.useProgram(this.program);
 
 
-        gl.uniformMatrix4fv(this.program.mvp, false, flatten(mult(viewProjection, model)));
+        gl.uniformMatrix4fv(this.program.model, false, flatten(model));
+        gl.uniformMatrix4fv(this.program.viewProjection, false, flatten(viewProjection));
         gl.uniform3f(this.program.lightPos, lightPos[0], lightPos[1], lightPos[2]);
         gl.uniform3f(this.program.cameraPos, cameraPos[0], cameraPos[1], cameraPos[2]);
 

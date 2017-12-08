@@ -3,7 +3,7 @@ var plane;
 var block;
 var models = {};
 
-var lightPos = vec3(0, 5, 0);
+var lightPos = vec3(0, 5, 10);
 
 var at = vec3(0, 0, 0);
 var eye = vec3(0, 0, 10);
