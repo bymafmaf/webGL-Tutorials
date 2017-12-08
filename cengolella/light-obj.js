@@ -1,7 +1,8 @@
-var sphere;
+var player;
 var plane;
 var block;
 var models = {};
+var things = [];
 
 var lightPos = vec3(0, 5, 10);
 
@@ -17,13 +18,15 @@ function modelLoad(meshes) {
     models.meshes = meshes;
 
     OBJ.initMeshBuffers(gl, models.meshes.plane);
-    OBJ.initMeshBuffers(gl, models.meshes.sphere);
+    OBJ.initMeshBuffers(gl, models.meshes.player);
     OBJ.initMeshBuffers(gl, models.meshes.block);
 
-    plane = new GameObject(models.meshes.plane, mult(mat4(), translate(0,-2.5,-2)));
-    sphere = new Player(models.meshes.sphere, mat4());
-    block = new GameObject(models.meshes.block, mult(mat4(), translate(5, -2.5, 0)));
-
+    plane = new Road(models.meshes.plane, mult(mat4(), translate(0,-2.5,-2)));
+    player = new Player(models.meshes.player);
+    block = new Gate(models.meshes.block, mult(translate(2.5, -2.5, -5), rotateY(90)));
+    things.push(plane);
+    things.push(player);
+    things.push(block);
     gameLoop();
 }
 
@@ -42,8 +45,8 @@ window.onload = function () {
 
     OBJ.downloadMeshes({
       'plane': 'plane.obj',
-      'sphere': 'long-quad.obj',
-      'block': 'block.obj'
+      'player': 'long-quad.obj',
+      'block': 'maya.obj'
     }, modelLoad);
 
 
@@ -55,13 +58,13 @@ const gameLoop = function () {
     gl.enable(gl.DEPTH_TEST);
 
     if (!gameEnded) {
-      at = sphere.getPosition();
+      at = player.getPosition();
       view = lookAt(add(at, toCam), at, [0, 1, 0]);
       proj = perspective(45, screenSize[0] / screenSize[1], 0.1, 30);
 
-      plane.draw(eye, lightPos, mult(proj,view));
-      sphere.draw(eye, lightPos, mult(proj,view));
-      block.draw(eye, lightPos, mult(proj,view));
+      for (let object of things) {
+        object.draw(eye, lightPos, mult(proj,view));
+      }
 
       window.requestAnimationFrame(gameLoop);
     }
@@ -73,15 +76,15 @@ const gameLoop = function () {
 document.onkeydown = function(key){
   console.log(key.keyCode);
   if (key.keyCode == 39) {
-    sphere.steerLeft();
+    player.steerLeft();
   }
   else if (key.keyCode == 37) {
-    sphere.steerRight();
+    player.steerRight();
   }
   else if (key.keyCode == 38) {
-    sphere.moveForward();
+    player.moveForward();
   }
   else if (key.keyCode == 40) {
-    sphere.moveBackward();
+    player.moveBackward();
   }
 }
