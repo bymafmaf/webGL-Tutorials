@@ -7,17 +7,16 @@ class Player extends GameObject {
     this.acceleration = 0.2;
     this.forwardMaxAchieved = false;
     this.backwardMaxAchieved = false;
+
   }
 
 
   steerLeft(){
-    //this.spine = add(this.spine, vec3(0.3, 0, 0));
-    this.model = mult(this.model, rotateY(-1));
+    this.model = mult(this.model, rotateY(-10));
   }
 
   steerRight(){
-    //this.spine = add(this.spine, vec3(-0.3, 0, 0));
-    this.model = mult(this.model, rotateY(1));
+    this.model = mult(this.model, rotateY(10));
   }
 
   moveForward(){

@@ -6,7 +6,7 @@ var models = {};
 var lightPos = vec3(0, 5, 10);
 
 var at = vec3(0, 0, 0);
-var eye = vec3(0, 20, 10);
+var eye = vec3(0, 10, 10);
 var toCam = subtract(eye, at);
 var proj;
 var view;
@@ -55,6 +55,7 @@ const gameLoop = function () {
     gl.enable(gl.DEPTH_TEST);
 
     if (!gameEnded) {
+      at = sphere.getPosition();
       view = lookAt(add(at, toCam), at, [0, 1, 0]);
       proj = perspective(45, screenSize[0] / screenSize[1], 0.1, 30);
 

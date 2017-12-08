@@ -41,4 +41,8 @@ class GameObject
         gl.drawElements(gl.TRIANGLES, this.mesh.indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 
     }
+
+    getPosition(){
+      return vec3(this.model[0][3], this.model[1][3],this.model[2][3]);
+    }
 }
