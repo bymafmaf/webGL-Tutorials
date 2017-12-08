@@ -74,12 +74,12 @@ const gameLoop = function () {
 }
 
 document.onkeydown = function(key){
-  console.log(key.keyCode);
+  //console.log(key.keyCode);
   if (key.keyCode == 39) {
-    player.steerLeft();
+    toCam = player.steerLeft(toCam);
   }
   else if (key.keyCode == 37) {
-    player.steerRight();
+    toCam = player.steerRight(toCam);
   }
   else if (key.keyCode == 38) {
     player.moveForward();

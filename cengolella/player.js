@@ -7,16 +7,25 @@ class Player extends GameObject {
     this.acceleration = 0.2;
     this.forwardMaxAchieved = false;
     this.backwardMaxAchieved = false;
-
+    this.rotation = mat4();
   }
 
-
-  steerLeft(){
-    this.model = mult(this.model, rotateY(-10));
+  rotateCamera(toCam, rotation){
+    var fourDtoCam = mult(rotation, vec4(toCam, 1));
+    for (var i = 0; i < fourDtoCam.length-1; i++) {
+      toCam[i] = fourDtoCam[i];
+    }
+    return toCam;
   }
 
-  steerRight(){
-    this.model = mult(this.model, rotateY(10));
+  steerLeft(toCam){
+    this.model = mult(this.model, rotateY(-1));
+    return this.rotateCamera(toCam, rotateY(-1));
+  }
+
+  steerRight(toCam){
+    this.model = mult(this.model, rotateY(1));
+    return this.rotateCamera(toCam, rotateY(1));
   }
 
   moveForward(){
