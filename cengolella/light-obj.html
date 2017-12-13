@@ -18,7 +18,15 @@
 
 
   void main() {
-    normal = vNormal;
+     //normal = vNormal;
+
+
+    // we create another vertex, apply pos's model to it and recalculate the normal.
+    mediump vec3 n_pos = vPosition + vNormal;
+    mediump vec4 normalModeled = model * vec4(n_pos, 1);
+    normalModeled /= normalModeled.w;
+    normal = normalize((normalModeled-pos).xyz);
+
     pos = model * vec4(vPosition,1);
     gl_Position = viewProjection * pos;
     pos /= pos.w;
@@ -44,7 +52,7 @@
 
       mediump vec3 toEye = lightDir;
       mediump vec3 reflect = -lightDir - 2. * dot(normalize(normal),-lightDir) * normalize(normal);
-      mediump float specFact = pow(clamp(dot(toEye,reflect),0.0,1.0),16.0);
+      mediump float specFact = pow(clamp(dot(toEye,reflect),0.0,1.0),2.0);
       color += specFact * vec3(0.2,0.2,0.2);
     }
     gl_FragColor = vec4(color,1.0);

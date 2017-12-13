@@ -4,7 +4,7 @@ var block;
 var models = {};
 var things = [];
 
-var lightPos = vec3(0, 5, 10);
+var lightPos = vec3(0, 1000, 10);
 
 var at = vec3(0, 0, 0);
 var eye = vec3(0, 10, 12);
