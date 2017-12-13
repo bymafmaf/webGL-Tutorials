@@ -7,7 +7,7 @@ var things = [];
 var lightPos = vec3(0, 5, 10);
 
 var at = vec3(0, 0, 0);
-var eye = vec3(0, 10, 10);
+var eye = vec3(0, 10, 12);
 var toCam = subtract(eye, at);
 var proj;
 var view;
@@ -23,7 +23,7 @@ function modelLoad(meshes) {
     OBJ.initMeshBuffers(gl, models.meshes.player);
     OBJ.initMeshBuffers(gl, models.meshes.block);
 
-    plane = new Road(models.meshes.plane, mult(mat4(), translate(0,-2.5,-2)));
+    plane = new Road(models.meshes.plane, mult(mult(mat4(), translate(0,-2.5,-2)), scalem(5,5,5)));
     player = new Player(models.meshes.player, mat4(), toCam);
     block = new Gate(models.meshes.block, mult(translate(2.5, -2.5, -5), rotateY(90)));
     things.push(plane);
@@ -61,7 +61,7 @@ const gameLoop = function () {
     if (!gameEnded) {
       at = player.getPosition();
       view = lookAt(add(at, player.moveCamera()), at, [0, 1, 0]);
-      proj = perspective(45, screenSize[0] / screenSize[1], 0.1, 30);
+      proj = perspective(60, screenSize[0] / screenSize[1], 0.1, 60);
 
       for (let object of things) {
         object.draw(eye, lightPos, mult(proj,view));

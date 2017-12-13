@@ -12,7 +12,6 @@
 
   uniform mediump mat4 model;
   uniform mediump mat4 viewProjection;
-  //uniform mediump vec3 velocity;
 
   varying mediump vec3 normal;
   varying mediump vec4 pos;
@@ -21,7 +20,6 @@
   void main() {
     normal = vNormal;
     pos = model * vec4(vPosition,1);
-    //pos *= normalize(vec4(velocity, 1));
     gl_Position = viewProjection * pos;
     pos /= pos.w;
   }
