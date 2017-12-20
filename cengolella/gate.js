@@ -1,3 +1,5 @@
 class Gate extends GameObject {
   
+
+    
 }
