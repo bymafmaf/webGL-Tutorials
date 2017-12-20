@@ -2,8 +2,8 @@ class GameObject
 {
     constructor(mesh, position){
         var program = initShaders(gl, 'vertex-shader-object', 'fragment-shader-object');
-        program.model = gl.getUniformLocation(program, "model");
         program.viewProjection = gl.getUniformLocation(program, "viewProjection");
+        program.model = gl.getUniformLocation(program, "model");
         program.lightPos = gl.getUniformLocation(program, "lightPos");
         program.cameraPos = gl.getUniformLocation(program, "cameraPos");
         program.screenSize = gl.getUniformLocation(program, "screenSize");

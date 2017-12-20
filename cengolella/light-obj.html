@@ -9,24 +9,15 @@
   attribute vec3 vPosition;
   attribute vec3 vNormal;
 
-
-  uniform mediump mat4 model;
   uniform mediump mat4 viewProjection;
+  uniform mediump mat4 model;
 
   varying mediump vec3 normal;
   varying mediump vec4 pos;
 
-
   void main() {
-     //normal = vNormal;
 
-
-    // we create another vertex, apply pos's model to it and recalculate the normal.
-    mediump vec3 n_pos = vPosition + vNormal;
-    mediump vec4 normalModeled = model * vec4(n_pos, 1);
-    normalModeled /= normalModeled.w;
-    normal = normalize((normalModeled-pos).xyz);
-
+    normal = vNormal;
     pos = model * vec4(vPosition,1);
     gl_Position = viewProjection * pos;
     pos /= pos.w;

@@ -1,14 +1,14 @@
 var player;
 var plane;
 var block;
-var pole1, pole2,pole3, pole4, uppole3, uppole, map,avent;
+var pole1, pole2,pole3, pole4, uppole3, uppole, map,evren;
 var models = {};
 var things = [];
 
-var lightPos = vec3(30, 10, 50);
+var lightPos = vec3(0, 250, 50);
 
 var at = vec3(0, 0, 0);
-var eye = vec3(0, 3, 7);
+var eye = vec3(0,1.5, 5);
 var toCam = subtract(eye, at);
 var proj;
 var view;
@@ -30,25 +30,20 @@ function modelLoad(meshes) {
     OBJ.initMeshBuffers(gl, models.meshes.pole4);
     OBJ.initMeshBuffers(gl, models.meshes.uppole3);
     OBJ.initMeshBuffers(gl, models.meshes.map);
-    //OBJ.initMeshBuffers(gl, models.meshes.avent);
+    OBJ.initMeshBuffers(gl, models.meshes.evren);
 
-    //plane = new Road(models.meshes.plane, mult(mult(mat4(), translate(0,-2.5,-2)), scalem(5,5,5)));
+  
     player= new Player(models.meshes.player,mult(mult(mat4(), translate(45,7,55)), scalem(0.3,0.3,0.3)), toCam);
-    //block = new Gate(models.meshes.block, mult(translate(2.5, -2.5, -5), rotateY(90)));
     pole1 = new Gate(models.meshes.pole1, mult(mult(translate(48.1, 8, 80), rotateX(90)), rotateY(0)));
     pole2 = new Gate(models.meshes.pole2,mult(mult(translate(42.08, 8, 80), rotateX(90)), rotateY(0)));
     uppole = new Gate(models.meshes.uppole, mult(translate(41.55, 9.7, 79.3), rotateZ(0)));
-
     pole3 = new Gate(models.meshes.pole3, mult(mult(translate(48.1, 8, 60), rotateX(90)), rotateY(0)));
     pole4 = new Gate(models.meshes.pole4,mult(mult(translate(42.08, 8, 60), rotateX(90)), rotateY(0)));
     uppole3 = new Gate(models.meshes.uppole3, mult(translate(41.55, 9.7, 59.3), rotateZ(0)));
-
     map = new Road(models.meshes.map,  mult(mult(mat4(), translate(-50, 0,-20)), scalem(1,1,1)));
-   // avent= new Road(models.meshes.avent,  mult(mult(mat4(), translate(-5, 10,-2)), scalem(1,1,1)));
+    evren = new Road(models.meshes.evren,  mult(mult(mat4(), translate(0, 0,45)), scalem(1.15,1.15,1.15)));
 
-    //things.push(plane);
     things.push(player);
-    //things.push(block);
     things.push(pole1);
     things.push(pole2);
     things.push(uppole);
@@ -56,7 +51,7 @@ function modelLoad(meshes) {
     things.push(pole4);
     things.push(uppole3);
     things.push(map);
-    //things.push(avent);
+    things.push(evren);
     gameLoop();
 }
 
@@ -71,7 +66,7 @@ window.onload = function () {
     screenSize = [canvas.width, canvas.height];
 
     gl.viewport(0, 0, screenSize[0], screenSize[1]);
-    gl.clearColor(0.7, 0.2, 0, 1);
+    gl.clearColor(0.6, 0.1, 0.1, 1);
 
     OBJ.downloadMeshes({
       'plane': 'plane.obj',
@@ -83,7 +78,7 @@ window.onload = function () {
       'uppole3': 'ustdirek.obj',
       'player': 'long-quad.obj',
       'block': 'maya.obj',
-      'avent': 'Avent.obj',
+      'evren': 'evren.obj',
       'map': 'map.obj'
     }, modelLoad);
 
@@ -97,7 +92,7 @@ const gameLoop = function () {
     if (!gameEnded) {
       at = player.getPosition();
       view = lookAt(add(at, player.moveCamera()), at, [0, 1, 0]);
-      proj = perspective(60, screenSize[0] / screenSize[1], 0.1, 60);
+      proj = perspective(60, screenSize[0] / screenSize[1], 0.1, 135);
 
       for (let object of things) {
         object.draw(eye, lightPos, mult(proj,view));

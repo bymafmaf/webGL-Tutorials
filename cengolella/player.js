@@ -4,7 +4,7 @@ class Player extends GameObject {
     super(mesh, position);
     this.constantDirectionalAcceleration = 0.01;
     this.constantSteerAcceleration = 0.8;
-    this.maxSpeed = 0.5;
+    this.maxSpeed = 1.5;
 
     this.spine = mat4();
     this.currentDirectionalAcceleration = 0;
