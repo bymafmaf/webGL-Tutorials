@@ -23,7 +23,9 @@ class GameObject
         model = model || mat4();
         model = mult(this.model, model);
         viewProjection = viewProjection || mat4();
-
+    
+    
+       
         gl.useProgram(this.program);
 
         gl.uniformMatrix4fv(this.program.model, false, flatten(model));

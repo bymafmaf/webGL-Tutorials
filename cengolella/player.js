@@ -2,9 +2,9 @@ class Player extends GameObject {
 
   constructor(mesh, position, initialCameraPosition){
     super(mesh, position);
-    this.constantDirectionalAcceleration = 0.01;
-    this.constantSteerAcceleration = 0.8;
-    this.maxSpeed = 1.5;
+    this.constantDirectionalAcceleration = 0.35;
+    this.constantSteerAcceleration = 1.5;
+    this.maxSpeed = 40;
 
     this.spine = mat4();
     this.currentDirectionalAcceleration = 0;
@@ -54,6 +54,8 @@ class Player extends GameObject {
   }
 
   applyDirectionalMove(){
+
+
     if (this.currentDirectionalAcceleration > 0){
       if (!this.forwardMaxAchieved) {
         this.spine = mult(this.spine, translate(0, 0, -this.currentDirectionalAcceleration));

@@ -13,6 +13,7 @@
   uniform mediump mat4 model;
 
   varying mediump vec3 normal;
+
   varying mediump vec4 pos;
 
   void main() {
@@ -21,6 +22,7 @@
     pos = model * vec4(vPosition,1);
     gl_Position = viewProjection * pos;
     pos /= pos.w;
+  
   }
 
   </script>
@@ -28,6 +30,7 @@
 
   varying mediump vec3 normal;
   varying mediump vec4 pos;
+
   uniform mediump vec3 lightPos;
   uniform mediump vec3 cameraPos;
 
@@ -39,7 +42,7 @@
     mediump vec3 color = vec3(0.1,0.1,0.1);
     if(dotNL > 0.0)
     {
-      color += vec3(0.4,0.4,0.4) * dotNL;
+      color += vec3(0.5,0.4,0.4) * dotNL;
 
       mediump vec3 toEye = lightDir;
       mediump vec3 reflect = -lightDir - 2. * dot(normalize(normal),-lightDir) * normalize(normal);
@@ -69,5 +72,12 @@
     Oops ... your browser doesn't support the HTML5 canvas element
   </canvas>
 </body>
+
+<div class="container">
+  <canvas id="canvas"></canvas>
+  <div id="overlay">
+    <div>Time: <span id="time"></span></div>
+  </div>
+</div>
 
 </html>
