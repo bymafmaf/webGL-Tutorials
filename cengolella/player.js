@@ -2,8 +2,8 @@ class Player extends GameObject {
 
   constructor(mesh, position, initialCameraPosition){
     super(mesh, position);
-    this.constantDirectionalAcceleration = 0.35;
-    this.constantSteerAcceleration = 1.5;
+    this.constantDirectionalAcceleration = 0.85;
+    this.constantSteerAcceleration = 2.5;
     this.maxSpeed = 40;
 
     this.spine = mat4();

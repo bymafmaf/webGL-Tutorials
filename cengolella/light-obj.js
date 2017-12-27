@@ -1,14 +1,14 @@
 var player;
 var plane;
 var block;
-var pole1, pole2,pole3, pole4, uppole3, uppole,pole5, pole6, uphole6, map,evren;
+var pole1, pole2,pole3, pole4, uppole3, uppole,pole5, pole6, uphole6, map,evren, zipzip;
 var models = {};
 var things = [];
 
 var lightPos = vec3(0, 250, 50);
 
 var at = vec3(0, 0, 0);
-var eye = vec3(0,4, 7.5);
+var eye = vec3(0,3, 6);
 var toCam = subtract(eye, at);
 var proj;
 var view;
@@ -36,9 +36,10 @@ function modelLoad(meshes) {
     OBJ.initMeshBuffers(gl, models.meshes.uppole6);
     OBJ.initMeshBuffers(gl, models.meshes.map);
     OBJ.initMeshBuffers(gl, models.meshes.evren);
+    OBJ.initMeshBuffers(gl, models.meshes.zipzip);
 
 
-    player= new Player(models.meshes.player,mult(mult(mat4(), translate(45,7,55)), scalem(0.01,0.01,0.01)), toCam);
+    player= new Player(models.meshes.player,mult(mult(mat4(), translate(45,6.2,55)), scalem(0.01,0.01,0.01)), toCam);
     pole1 = new Gate(models.meshes.pole1, mult(mult(translate(48.1, 8, 80), rotateX(90)), rotateY(0)));
     pole2 = new Gate(models.meshes.pole2,mult(mult(translate(42.08, 8, 80), rotateX(90)), rotateY(0)));
     uppole = new Gate(models.meshes.uppole, mult(translate(41.55, 9.7, 79.3), rotateZ(0)));
@@ -51,6 +52,7 @@ function modelLoad(meshes) {
     map = new Road(models.meshes.map,  mult(mult(mat4(), translate(-50, 0,-20)), scalem(1,1,1)));
     evren = new Road(models.meshes.evren,  mult(mult(mat4(), translate(0, 4,45)), scalem(1.05,1.05 ,1.1)));
 
+    zipzip = new Zipzip(models.meshes.zipzip, mult(mult(translate(45.2, 6.5, 40), rotateX(0)), rotateY(90)));
 
     things.push(player);
     things.push(pole1);
@@ -64,6 +66,7 @@ function modelLoad(meshes) {
     things.push(uppole6);
     things.push(map);
     things.push(evren);
+    things.push(zipzip);
 
     gameLoop();
 }
@@ -99,6 +102,7 @@ window.onload = function () {
       'block': 'maya.obj',
       'evren': 'evren.obj',
       'player': 'carsu.obj',
+      'zipzip': 'direk.obj',
       'map': 'map.obj'
     }, modelLoad);
 
@@ -129,6 +133,9 @@ const gameLoop = function (clock) {
     else {
         window.cancelAnimationFrame(gameLoop);
     }
+
+    
+
 }
 
 document.onkeydown = function(key){
@@ -161,4 +168,9 @@ document.onkeyup = function(key){
   else if (key.keyCode == 40) {
     player.downUp();
   }
+
+  
+    
+
+
 }
