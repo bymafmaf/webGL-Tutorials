@@ -1,6 +1,6 @@
 class GameObject
 {
-    constructor(mesh, position){
+    constructor(mesh, position, textureUrl){
         var program = initShaders(gl, 'vertex-shader-object', 'fragment-shader-object');
         program.viewProjection = gl.getUniformLocation(program, "viewProjection");
         program.model = gl.getUniformLocation(program, "model");
@@ -21,6 +21,9 @@ class GameObject
         this.program = program;
         this.mesh = mesh;
         this.model = position || mat4();
+        if (textureUrl) {
+          initTexture(this, textureUrl);
+        }
     }
 
     draw(cameraPos, lightPos, viewProjection, model){

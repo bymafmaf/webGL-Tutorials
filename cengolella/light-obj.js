@@ -49,7 +49,7 @@ function modelLoad(meshes) {
     pole5 = new Gate(models.meshes.pole5, mult(mult(translate(-42.4, 8, 73), rotateX(90)), rotateY(0)));
     pole6 = new Gate(models.meshes.pole6,mult(mult(translate(-48.42, 8, 73), rotateX(90)), rotateY(0)));
     uppole6 = new Gate(models.meshes.uppole6, mult(translate(-49.05, 9.7, 72.3), rotateZ(0)));
-    map = new Road(models.meshes.map,  mult(mult(mat4(), translate(-50, 0,-20)), scalem(1,1,1)));
+    map = new Road(models.meshes.map,  mult(mat4(), translate(0, 5.75, 50)),  "textures/stone_wall.png");
     evren = new Road(models.meshes.evren,  mult(mult(mat4(), translate(0, 4,45)), scalem(1.05,1.05 ,1.1)));
 
     zipzip = new Zipzip(models.meshes.zipzip, mult(mult(translate(45.2, 6.5, 40), rotateX(0)), rotateY(90)));
@@ -105,7 +105,7 @@ window.onload = function () {
       'evren': 'evren.obj',
       'player': 'carsu.obj',
       'zipzip': 'direk.obj',
-      'map': 'map.obj'
+      'map': 'textured-map.obj'
     }, modelLoad);
 
 
