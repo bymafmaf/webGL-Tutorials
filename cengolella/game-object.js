@@ -5,12 +5,16 @@ class GameObject
         program.viewProjection = gl.getUniformLocation(program, "viewProjection");
         program.model = gl.getUniformLocation(program, "model");
         program.lightPos = gl.getUniformLocation(program, "lightPos");
+        program.hasTexture = gl.getUniformLocation(program, "hasTexture");
+        program.samplerUniform = gl.getUniformLocation(program, "uSampler");
         program.cameraPos = gl.getUniformLocation(program, "cameraPos");
         program.screenSize = gl.getUniformLocation(program, "screenSize");
 
         program.vpos_attr = gl.getAttribLocation(program, 'vPosition');
         gl.enableVertexAttribArray(program.vpos_attr);
 
+        program.texture_attr = gl.getAttribLocation(program, "aTextureCoord");
+        //gl.enableVertexAttribArray(program.texture_attr);
         program.vnor_attr = gl.getAttribLocation(program, "vNormal");
         gl.enableVertexAttribArray(program.vnor_attr);
 
@@ -38,6 +42,21 @@ class GameObject
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this.mesh.normalBuffer);
         gl.vertexAttribPointer(this.program.vnor_attr, this.mesh.normalBuffer.itemSize, gl.FLOAT, false, 0, 0);
+
+        if(!this.mesh.textures.length){
+          gl.disableVertexAttribArray(this.program.texture_attr);
+          gl.uniform1i(this.program.hasTexture, false);
+        }
+        else{
+          gl.uniform1i(this.program.hasTexture, true);
+          gl.activeTexture(gl.TEXTURE0);
+          gl.bindTexture(gl.TEXTURE_2D, this.texture);
+          gl.uniform1i(this.program.samplerUniform, 0);
+
+          gl.enableVertexAttribArray(this.program.texture_attr);
+          gl.bindBuffer(gl.ARRAY_BUFFER, this.mesh.textureBuffer);
+          gl.vertexAttribPointer(this.program.texture_attr, this.mesh.textureBuffer.itemSize, gl.FLOAT, false, 0, 0);
+        }
 
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.mesh.indexBuffer);
         gl.drawElements(gl.TRIANGLES, this.mesh.indexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
