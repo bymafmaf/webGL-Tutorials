@@ -19,23 +19,23 @@ var timeNode = document.createTextNode("");
 
 var GAME_SPEED = 1000;
 
-function modelLoad(meshes) {
-    models.meshes = meshes;
-
-    OBJ.initMeshBuffers(gl, models.meshes.plane);
-    OBJ.initMeshBuffers(gl, models.meshes.player);
-    OBJ.initMeshBuffers(gl, models.meshes.block);
-    OBJ.initMeshBuffers(gl, models.meshes.pole);
-    OBJ.initMeshBuffers(gl, models.meshes.uppole);
-    OBJ.initMeshBuffers(gl, models.meshes.map);
-    OBJ.initMeshBuffers(gl, models.meshes.evren);
-    OBJ.initMeshBuffers(gl, models.meshes.zipzip);
-
-
-    player= new Player(models.meshes.player,mult(mult(mat4(), translate(45,6.2,55)), scalem(0.01,0.01,0.01)), toCam);
+function initMeshes(meshes){
+  models.meshes = meshes;
+  OBJ.initMeshBuffers(gl, models.meshes.plane);
+  OBJ.initMeshBuffers(gl, models.meshes.player);
+  OBJ.initMeshBuffers(gl, models.meshes.block);
+  OBJ.initMeshBuffers(gl, models.meshes.pole);
+  OBJ.initMeshBuffers(gl, models.meshes.uppole);
+  OBJ.initMeshBuffers(gl, models.meshes.map);
+  OBJ.initMeshBuffers(gl, models.meshes.universe);
+  OBJ.initMeshBuffers(gl, models.meshes.zipzip);
+  modelLoad();
+}
+function modelLoad() {
+    player= new Player(mult(mult(mat4(), translate(45,6.2,55)), scalem(0.01,0.01,0.01)), toCam);
     pole = new Gate(vec3(0,0,0));
-    map = new Road(models.meshes.map,  mult(mat4(), translate(0, 5.75, 50)),  "textures/stone_wall.png");
-    evren = new Road(models.meshes.evren,  mult(mult(mat4(), translate(0, 4,45)), scalem(1.05,1.05 ,1.1)));
+    map = new Road(mult(mat4(), translate(0, 5.75, 50)));
+    evren = new Universe(mult(mult(mat4(), translate(0, 4,45)), scalem(1.05,1.05 ,1.1)));
 
     zipzip = new Zipzip(models.meshes.zipzip, mult(mult(translate(45.2, 6.5, 40), rotateX(0)), rotateY(90)));
     cut = new Cutter ();
@@ -71,11 +71,11 @@ window.onload = function () {
       'pole': 'direk.obj',
       'uppole': 'ustdirek.obj',
       'block': 'maya.obj',
-      'evren': 'evren.obj',
+      'universe': 'universe.obj',
       'player': 'carsu.obj',
       'zipzip': 'direk.obj',
       'map': 'textured-map.obj'
-    }, modelLoad);
+    }, initMeshes);
 
 
 }
