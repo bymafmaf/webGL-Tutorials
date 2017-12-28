@@ -1,7 +1,7 @@
 var player;
 var plane;
 var block, cut;
-var pole1, pole2,pole3, pole4, uppole3, uppole,pole5, pole6, uphole6, map,evren, zipzip;
+var pole, map, evren, zipzip;
 var models = {};
 var things = [];
 
@@ -25,30 +25,15 @@ function modelLoad(meshes) {
     OBJ.initMeshBuffers(gl, models.meshes.plane);
     OBJ.initMeshBuffers(gl, models.meshes.player);
     OBJ.initMeshBuffers(gl, models.meshes.block);
-    OBJ.initMeshBuffers(gl, models.meshes.pole1);
-    OBJ.initMeshBuffers(gl, models.meshes.pole2);
+    OBJ.initMeshBuffers(gl, models.meshes.pole);
     OBJ.initMeshBuffers(gl, models.meshes.uppole);
-    OBJ.initMeshBuffers(gl, models.meshes.pole3);
-    OBJ.initMeshBuffers(gl, models.meshes.pole4);
-    OBJ.initMeshBuffers(gl, models.meshes.uppole3);
-    OBJ.initMeshBuffers(gl, models.meshes.pole5);
-    OBJ.initMeshBuffers(gl, models.meshes.pole6);
-    OBJ.initMeshBuffers(gl, models.meshes.uppole6);
     OBJ.initMeshBuffers(gl, models.meshes.map);
     OBJ.initMeshBuffers(gl, models.meshes.evren);
     OBJ.initMeshBuffers(gl, models.meshes.zipzip);
 
 
     player= new Player(models.meshes.player,mult(mult(mat4(), translate(45,6.2,55)), scalem(0.01,0.01,0.01)), toCam);
-    pole1 = new Gate(models.meshes.pole1, mult(mult(translate(48.1, 8, 80), rotateX(90)), rotateY(0)));
-    pole2 = new Gate(models.meshes.pole2,mult(mult(translate(42.08, 8, 80), rotateX(90)), rotateY(0)));
-    uppole = new Gate(models.meshes.uppole, mult(translate(41.55, 9.7, 79.3), rotateZ(0)));
-    pole3 = new Gate(models.meshes.pole3, mult(mult(translate(-43.5, 8, 10), rotateX(90)), rotateY(0)));
-    pole4 = new Gate(models.meshes.pole4,mult(mult(translate(-49.52, 8, 10), rotateX(90)), rotateY(0)));
-    uppole3 = new Gate(models.meshes.uppole3, mult(translate(-50.15, 9.7, 9.3), rotateZ(0)));
-    pole5 = new Gate(models.meshes.pole5, mult(mult(translate(-42.4, 8, 73), rotateX(90)), rotateY(0)));
-    pole6 = new Gate(models.meshes.pole6,mult(mult(translate(-48.42, 8, 73), rotateX(90)), rotateY(0)));
-    uppole6 = new Gate(models.meshes.uppole6, mult(translate(-49.05, 9.7, 72.3), rotateZ(0)));
+    pole = new Gate(vec3(0,0,0));
     map = new Road(models.meshes.map,  mult(mat4(), translate(0, 5.75, 50)),  "textures/stone_wall.png");
     evren = new Road(models.meshes.evren,  mult(mult(mat4(), translate(0, 4,45)), scalem(1.05,1.05 ,1.1)));
 
@@ -56,15 +41,7 @@ function modelLoad(meshes) {
     cut = new Cutter ();
 
     things.push(player);
-    things.push(pole1);
-    things.push(pole2);
-    things.push(uppole);
-    things.push(pole3);
-    things.push(pole4);
-    things.push(uppole3);
-    things.push(pole5);
-    things.push(pole6);
-    things.push(uppole6);
+    things.push(pole);
     things.push(map);
     things.push(evren);
     //things.push(zipzip);
@@ -91,16 +68,8 @@ window.onload = function () {
 
     OBJ.downloadMeshes({
       'plane': 'plane.obj',
-      'pole1': 'direk.obj',
-      'pole2': 'direk.obj',
+      'pole': 'direk.obj',
       'uppole': 'ustdirek.obj',
-      'pole3': 'direk.obj',
-      'pole4': 'direk.obj',
-      'uppole3': 'ustdirek.obj',
-      'pole5': 'direk.obj',
-      'pole6': 'direk.obj',
-      'uppole6': 'ustdirek.obj',
-      //'player': 'long-quad.obj',
       'block': 'maya.obj',
       'evren': 'evren.obj',
       'player': 'carsu.obj',
