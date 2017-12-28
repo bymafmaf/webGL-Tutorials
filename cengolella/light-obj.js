@@ -33,7 +33,7 @@ function initMeshes(meshes){
 }
 function modelLoad() {
   player= new Player(mult(mult(mat4(), translate(45,6.2,55)), scalem(0.01,0.01,0.01)), toCam);
-  pole = new Gate(vec3(0,0,0));
+  pole = new Gate(mat4());
   map = new Road(mult(mat4(), translate(0, 5.75, 50)));
   evren = new Universe(mult(mult(mat4(), translate(0, 4,45)), scalem(1.05,1.05 ,1.1)));
 
@@ -65,14 +65,14 @@ window.onload = function () {
   gl.clearColor(0.6, 0.1, 0.1, 1);
 
   OBJ.downloadMeshes({
-    'plane': 'plane.obj',
-    'pole': 'direk.obj',
-    'uppole': 'ustdirek.obj',
-    'block': 'maya.obj',
-    'universe': 'universe.obj',
-    'player': 'carsu.obj',
-    'zipzip': 'direk.obj',
-    'map': 'textured-map.obj'
+    'plane': 'models/plane.obj',
+    'pole': 'models/direk.obj',
+    'uppole': 'models/ustdirek.obj',
+    'block': 'models/maya.obj',
+    'universe': 'models/universe.obj',
+    'player': 'models/carsu.obj',
+    'zipzip': 'models/direk.obj',
+    'map': 'models/textured-map.obj'
   }, initMeshes);
 }
 

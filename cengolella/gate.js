@@ -2,9 +2,9 @@ class Gate {
 
   constructor(position){
     this.children = [ //46.51
-      new GameObject(models.meshes.pole, mult(translate(position[0] + 6.5, position[1] + 8.25, position[2]+0.6), rotateX(90))),
-      new GameObject(models.meshes.pole, mult(translate(position[0]+0.5, position[1] + 8.25, position[2]+0.6), rotateX(90))),
-      new GameObject(models.meshes.uppole, mult(mat4(), translate(position[0], position[1] + 10, position[1])))
+      new GameObject(models.meshes.pole, mult(position, mult(translate(6.5, 8.25, 0.6), rotateX(90)))),
+      new GameObject(models.meshes.pole, mult(position, mult(translate(0.5, 8.25, 0.6), rotateX(90)))),
+      new GameObject(models.meshes.uppole, mult(position, mult(mat4(), translate(0, 10, 0))))
     ];
   }
 
