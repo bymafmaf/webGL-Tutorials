@@ -1,6 +1,6 @@
 var player;
 var plane;
-var block;
+var block, cut;
 var pole1, pole2,pole3, pole4, uppole3, uppole,pole5, pole6, uphole6, map,evren, zipzip;
 var models = {};
 var things = [];
@@ -8,7 +8,7 @@ var things = [];
 var lightPos = vec3(0, 250, 50);
 
 var at = vec3(0, 0, 0);
-var eye = vec3(0,3, 6);
+var eye = vec3(0,2, 5.5);
 var toCam = subtract(eye, at);
 var proj;
 var view;
@@ -53,6 +53,7 @@ function modelLoad(meshes) {
     evren = new Road(models.meshes.evren,  mult(mult(mat4(), translate(0, 4,45)), scalem(1.05,1.05 ,1.1)));
 
     zipzip = new Zipzip(models.meshes.zipzip, mult(mult(translate(45.2, 6.5, 40), rotateX(0)), rotateY(90)));
+    cut = new Cutter ();
 
     things.push(player);
     things.push(pole1);
@@ -66,7 +67,8 @@ function modelLoad(meshes) {
     things.push(uppole6);
     things.push(map);
     things.push(evren);
-    things.push(zipzip);
+    //things.push(zipzip);
+    things.push(cut);
 
     gameLoop();
 }
@@ -123,6 +125,8 @@ const gameLoop = function (clock) {
       var deltaTime = clock - then;
       then = clock;
       timeNode.nodeValue = clock.toFixed(2);
+
+     
 
       for (let object of things) {
         object.draw(eye, lightPos, mult(proj,view));
