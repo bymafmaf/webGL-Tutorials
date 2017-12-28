@@ -1,6 +1,6 @@
 class Camera
 {
-    constructor(){
-        
-    }
+  constructor(){
+
+  }
 }

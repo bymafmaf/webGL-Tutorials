@@ -32,83 +32,73 @@ function initMeshes(meshes){
   modelLoad();
 }
 function modelLoad() {
-    player= new Player(mult(mult(mat4(), translate(45,6.2,55)), scalem(0.01,0.01,0.01)), toCam);
-    pole = new Gate(vec3(0,0,0));
-    map = new Road(mult(mat4(), translate(0, 5.75, 50)));
-    evren = new Universe(mult(mult(mat4(), translate(0, 4,45)), scalem(1.05,1.05 ,1.1)));
+  player= new Player(mult(mult(mat4(), translate(45,6.2,55)), scalem(0.01,0.01,0.01)), toCam);
+  pole = new Gate(vec3(0,0,0));
+  map = new Road(mult(mat4(), translate(0, 5.75, 50)));
+  evren = new Universe(mult(mult(mat4(), translate(0, 4,45)), scalem(1.05,1.05 ,1.1)));
 
-    zipzip = new Zipzip(models.meshes.zipzip, mult(mult(translate(45.2, 6.5, 40), rotateX(0)), rotateY(90)));
-    cut = new Cutter ();
+  zipzip = new Zipzip(models.meshes.zipzip, mult(mult(translate(45.2, 6.5, 40), rotateX(0)), rotateY(90)));
+  cut = new Cutter ();
 
-    things.push(player);
-    things.push(pole);
-    things.push(map);
-    things.push(evren);
-    //things.push(zipzip);
-    things.push(cut);
+  things.push(player);
+  things.push(pole);
+  things.push(map);
+  things.push(evren);
+  //things.push(zipzip);
+  things.push(cut);
 
-    gameLoop();
+  gameLoop();
 }
-
-
 window.onload = function () {
-    let canvas = document.getElementById("gl-canvas");
-    gl = WebGLUtils.setupWebGL(canvas);
-    if (!gl) {
-        alert("yo");
-    }
-    var timeElement = document.getElementById("time");
-   
-    timeElement.appendChild(timeNode);
-  
-    screenSize = [canvas.width, canvas.height];
+  let canvas = document.getElementById("gl-canvas");
+  gl = WebGLUtils.setupWebGL(canvas);
+  if (!gl) {
+    alert("yo");
+  }
+  var timeElement = document.getElementById("time");
 
-    gl.viewport(0, 0, screenSize[0], screenSize[1]);
-    gl.clearColor(0.6, 0.1, 0.1, 1);
+  timeElement.appendChild(timeNode);
 
-    OBJ.downloadMeshes({
-      'plane': 'plane.obj',
-      'pole': 'direk.obj',
-      'uppole': 'ustdirek.obj',
-      'block': 'maya.obj',
-      'universe': 'universe.obj',
-      'player': 'carsu.obj',
-      'zipzip': 'direk.obj',
-      'map': 'textured-map.obj'
-    }, initMeshes);
+  screenSize = [canvas.width, canvas.height];
 
+  gl.viewport(0, 0, screenSize[0], screenSize[1]);
+  gl.clearColor(0.6, 0.1, 0.1, 1);
 
+  OBJ.downloadMeshes({
+    'plane': 'plane.obj',
+    'pole': 'direk.obj',
+    'uppole': 'ustdirek.obj',
+    'block': 'maya.obj',
+    'universe': 'universe.obj',
+    'player': 'carsu.obj',
+    'zipzip': 'direk.obj',
+    'map': 'textured-map.obj'
+  }, initMeshes);
 }
 
 var gameEnded = false;
 const gameLoop = function (clock) {
-    gl.clear(gl.COLOR_BUFFER_BIT);
-    gl.enable(gl.DEPTH_TEST);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.enable(gl.DEPTH_TEST);
 
-    if (!gameEnded) {
-      at = player.getPosition();
-      view = lookAt(add(at, player.moveCamera()), at, [0, 1, 0]);
-      proj = perspective(60, screenSize[0] / screenSize[1], 0.2, 200);
+  if (!gameEnded) {
+    at = player.getPosition();
+    view = lookAt(add(at, player.moveCamera()), at, [0, 1, 0]);
+    proj = perspective(60, screenSize[0] / screenSize[1], 0.2, 200);
 
-      clock *= 0.001;
-      var deltaTime = clock - then;
-      then = clock;
-      timeNode.nodeValue = clock.toFixed(2);
-
-     
-
-      for (let object of things) {
-        object.draw(eye, lightPos, mult(proj,view));
-      }
-
-      window.requestAnimationFrame(gameLoop);
-    }
-    else {
-        window.cancelAnimationFrame(gameLoop);
+    clock *= 0.001;
+    var deltaTime = clock - then;
+    then = clock;
+    timeNode.nodeValue = clock.toFixed(2);
+    for (let object of things) {
+      object.draw(eye, lightPos, mult(proj,view));
     }
 
-    
-
+    window.requestAnimationFrame(gameLoop);
+  }
+  else {
+    window.cancelAnimationFrame(gameLoop);
+  }
 }
 
 document.onkeydown = function(key){
@@ -141,9 +131,4 @@ document.onkeyup = function(key){
   else if (key.keyCode == 40) {
     player.downUp();
   }
-
-  
-    
-
-
 }
