@@ -5,6 +5,26 @@
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
   <title>Scene</title>
 
+  <link href="js/light-obj.js" rel="stylesheet" type="text/js" />
+  <style>
+
+            #timer {
+                position: absolute;
+                border: 3px solid #FFF;
+                border-radius: 5px;
+                color: #FFF;
+                font-family: arial;
+                bottom: 240px;
+                left: 10px;
+                background: #AA3333;
+                font-size: 20pt;
+                font-weight: bold;
+                padding: 5px;
+            }
+
+        </style>
+  </link>
+
   <script id="vertex-shader-object" type="x-shader/x-vertex">
   attribute vec3 vPosition;
   attribute vec3 vNormal;
@@ -63,6 +83,7 @@
   <script type="text/javascript" src="road.js"></script>
   <script type="text/javascript" src="gate.js"></script>
   <script type="text/javascript" src="zipzip.js"></script>
+  <script type="text/javascript" src="cutter.js"></script>
   <script type="text/javascript" src="light-obj.js"></script>
 
 </head>
@@ -75,8 +96,8 @@
 
 <div class="container">
   <canvas id="canvas"></canvas>
-  <div id="overlay">
-    <div>Time: <span id="time"></span></div>
+  <div id="timer">
+      <b>Timer:</b> <span id="time"></span>
   </div>
 </div>
 
