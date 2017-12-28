@@ -1,7 +1,7 @@
 class Player extends GameObject {
 
   constructor(position, initialCameraPosition){
-    super(models.meshes.player, position);
+    super(models.meshes.player, position, "textures/car.png");
     this.constantDirectionalAcceleration = 0.80;
     this.constantSteerAcceleration = 2.5;
     this.maxSpeed = 39.9;
@@ -16,6 +16,7 @@ class Player extends GameObject {
     this.steerMax = 5;
 
     this.lastCameraPosition = initialCameraPosition;
+    this.initBoundingBox();
   }
 
   getSpeed(){

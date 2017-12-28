@@ -1,4 +1,7 @@
 class Zipzip extends GameObject{
+  constructor(position){
+    super(models.meshes.pole, position);
+  }
 
   MovingY(){
 

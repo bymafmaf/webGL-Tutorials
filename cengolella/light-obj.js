@@ -1,6 +1,6 @@
 var player;
 var plane;
-var block, cut, speed;
+var block, speed;
 var pole, map, evren, zipzip;
 var models = {};
 var things = [];
@@ -22,14 +22,12 @@ var GAME_SPEED = 1000;
 
 function initMeshes(meshes){
   models.meshes = meshes;
-  OBJ.initMeshBuffers(gl, models.meshes.plane);
   OBJ.initMeshBuffers(gl, models.meshes.player);
   OBJ.initMeshBuffers(gl, models.meshes.block);
   OBJ.initMeshBuffers(gl, models.meshes.pole);
   OBJ.initMeshBuffers(gl, models.meshes.uppole);
   OBJ.initMeshBuffers(gl, models.meshes.map);
   OBJ.initMeshBuffers(gl, models.meshes.universe);
-  OBJ.initMeshBuffers(gl, models.meshes.zipzip);
   modelLoad();
 }
 function modelLoad() {
@@ -38,15 +36,13 @@ function modelLoad() {
   map = new Road(mult(mat4(), translate(0, 5.75, 50)));
   evren = new Universe(mult(mult(mat4(), translate(0, 4,45)), scalem(1.05,1.05 ,1.1)));
 
-  zipzip = new Zipzip(models.meshes.zipzip, mult(mult(translate(45.2, 6.5, 40), rotateX(0)), rotateY(90)));
-  cut = new Cutter ();
+  //zipzip = new Zipzip(models.meshes.zipzip, mult(mult(translate(45.2, 6.5, 40), rotateX(0)), rotateY(90)));
 
   things.push(player);
   things.push(pole);
   things.push(map);
   things.push(evren);
   //things.push(zipzip);
-  things.push(cut);
 
   gameLoop();
 }
@@ -68,13 +64,11 @@ window.onload = function () {
   gl.clearColor(0.6, 0.1, 0.1, 1);
 
   OBJ.downloadMeshes({
-    'plane': 'models/plane.obj',
     'pole': 'models/direk.obj',
     'uppole': 'models/ustdirek.obj',
     'block': 'models/maya.obj',
     'universe': 'models/universe.obj',
     'player': 'models/carsu.obj',
-    'zipzip': 'models/direk.obj',
     'map': 'models/textured-map.obj'
   }, initMeshes);
 }

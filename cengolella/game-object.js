@@ -26,6 +26,41 @@ class GameObject
     }
   }
 
+  initBoundingBox(){
+    this.boundingBox = {
+      minX : Number.MAX_VALUE,
+      minY : Number.MAX_VALUE,
+      minZ : Number.MAX_VALUE,
+
+      maxX : Number.MIN_VALUE,
+      maxY : Number.MIN_VALUE,
+      maxZ : Number.MIN_VALUE
+    };
+
+    for (var i = 0; i < this.mesh.vertices.length; i+=3) {
+      if (this.mesh.vertices[i] > this.boundingBox.maxX) {
+        this.boundingBox.maxX = this.mesh.vertices[i];
+      }
+      else if (this.mesh.vertices[i] < this.boundingBox.minX){
+        this.boundingBox.minX = this.mesh.vertices[i];
+      }
+
+      if (this.mesh.vertices[i+1] > this.boundingBox.maxY) {
+        this.boundingBox.maxY = this.mesh.vertices[i+1];
+      }
+      else if (this.mesh.vertices[i+1] < this.boundingBox.minY){
+        this.boundingBox.minY = this.mesh.vertices[i+1];
+      }
+
+      if (this.mesh.vertices[i+2] > this.boundingBox.maxZ) {
+        this.boundingBox.maxZ = this.mesh.vertices[i+2];
+      }
+      else if (this.mesh.vertices[i+2] < this.boundingBox.minZ){
+        this.boundingBox.minZ = this.mesh.vertices[i+2];
+      }
+    }
+  }
+
   draw(cameraPos, lightPos, viewProjection, model){
     model = model || mat4();
     model = mult(this.model, model);
