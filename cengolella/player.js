@@ -2,9 +2,9 @@ class Player extends GameObject {
 
   constructor(position, initialCameraPosition){
     super(models.meshes.player, position);
-    this.constantDirectionalAcceleration = 0.85;
+    this.constantDirectionalAcceleration = 0.80;
     this.constantSteerAcceleration = 2.5;
-    this.maxSpeed = 40;
+    this.maxSpeed = 39.9;
 
     this.spine = mat4();
     this.currentDirectionalAcceleration = 0;
@@ -18,6 +18,9 @@ class Player extends GameObject {
     this.lastCameraPosition = initialCameraPosition;
   }
 
+  getSpeed(){
+    return -3*this.spine[2][3];
+  }
   leftDown(){
     this.currentSteerAcceleration = -this.constantSteerAcceleration;
   }

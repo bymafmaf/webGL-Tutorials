@@ -1,6 +1,6 @@
 var player;
 var plane;
-var block, cut;
+var block, cut, speed;
 var pole, map, evren, zipzip;
 var models = {};
 var things = [];
@@ -16,6 +16,7 @@ var leftNum = 0;
 var rightNum = 0;
 var then=0;
 var timeNode = document.createTextNode("");
+var spe = document.createTextNode("");
 
 var GAME_SPEED = 1000;
 
@@ -59,6 +60,8 @@ window.onload = function () {
 
   timeElement.appendChild(timeNode);
 
+  var speedElement = document.getElementById("speed");
+  speedElement.appendChild(spe);
   screenSize = [canvas.width, canvas.height];
 
   gl.viewport(0, 0, screenSize[0], screenSize[1]);
@@ -83,13 +86,13 @@ const gameLoop = function (clock) {
 
   if (!gameEnded) {
     at = player.getPosition();
+    speed = player.getSpeed();
     view = lookAt(add(at, player.moveCamera()), at, [0, 1, 0]);
     proj = perspective(60, screenSize[0] / screenSize[1], 0.2, 200);
 
     clock *= 0.001;
-    var deltaTime = clock - then;
-    then = clock;
     timeNode.nodeValue = clock.toFixed(2);
+    spe.nodeValue = speed.toFixed(2);
     for (let object of things) {
       object.draw(eye, lightPos, mult(proj,view));
     }
