@@ -4,10 +4,10 @@ var models = {};
 var things = [];
 var collisionActives = [];
 
-var lightPos = vec3(0, 250, 50);
+var lightPos = vec3(0, 50, 75);
 
 var at = vec3(0, 0, 0);
-var eye = vec3(0,7, 13);
+var eye = vec3(0,30, 30);
 var toCam = subtract(eye, at);
 var proj;
 var view;
@@ -32,20 +32,21 @@ function initMeshes(meshes){
   modelLoad();
 }
 function modelLoad() {
-  player= new Player(mult(mult(mat4(), translate(45,2.25,55)), scalem(0.05,0.05,0.05)), toCam, [0.05,0.05,0.05]);
+  player= new Player(mult(mult(mat4(), translate(45,2.25,80)), scalem(0.05,0.05,0.05)), toCam, [0.05,0.05,0.05]);
   things.push(player);
 
-  var pole = new Gate(mat4());
+  var pole = new Gate(mult(mat4(), translate(0, 0, -10)));
   things.push(pole);
 
   var universe = new Universe(mult(mat4(), translate(0, 0,45)));
+  collisionActives.push(universe);
   things.push(universe);
 
   var brick = new Brick(mult(mat4(), translate(-30,2,40)));
   collisionActives.push(brick);
   things.push(brick);
 
-  var brick2 = new Brick(mult(mat4(), translate(30,2,40)));
+  var brick2 = new Brick(mult(mat4(), translate(30,2,60)));
   collisionActives.push(brick2);
   things.push(brick2);
 
@@ -57,7 +58,7 @@ function modelLoad() {
   collisionActives.push(brick4);
   things.push(brick4);
 
-  var brick6 = new Brick(mult(mat4(), translate(-2,2,20)));
+  var brick6 = new Brick(mult(mat4(), translate(-2,2,10)));
   collisionActives.push(brick6);
   things.push(brick6);
 

@@ -80,15 +80,20 @@ void main() {
   mediump vec3 color = vec3(0, 0, 0);
   if(dotNL > 0.0)
   {
-    color += vec3(0.1,0.1,0.1) * dotNL;
-
+    if (hasTexture) {
+      color += texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t)).rgb * dotNL;
+    }
+    else {
+      color += vec3(0.1,0.1,0.1) * dotNL;
+    }
+    color *= vec3(1.2, 1.2, 1.2);
     mediump vec3 toEye = lightDir;
     mediump vec3 reflect = -lightDir - 2. * dot(normalize(normal),-lightDir) * normalize(normal);
     mediump float specFact = pow(clamp(dot(toEye,reflect),0.0,1.0),2.0);
     color += specFact * vec3(0.2,0.2,0.2);
   }
-  mediump vec3 finalColor = mix(color, texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t)).rgb, float(hasTexture));
-  gl_FragColor = vec4(finalColor, 1.0);
+  //mediump vec3 finalColor = mix(color, texture2D(uSampler, vec2(vTextureCoord.s, vTextureCoord.t)).rgb, float(hasTexture));
+  gl_FragColor = vec4(color, 1.0);
 }
 
 </script>
