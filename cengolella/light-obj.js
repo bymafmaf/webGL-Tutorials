@@ -1,6 +1,5 @@
-var player;
+var player, pole, universe;
 var block, speed;
-var pole, map, universe, zipzip;
 var models = {};
 var things = [];
 
@@ -22,25 +21,19 @@ var GAME_SPEED = 1000;
 function initMeshes(meshes){
   models.meshes = meshes;
   OBJ.initMeshBuffers(gl, models.meshes.player);
-  OBJ.initMeshBuffers(gl, models.meshes.block);
   OBJ.initMeshBuffers(gl, models.meshes.pole);
   OBJ.initMeshBuffers(gl, models.meshes.uppole);
   OBJ.initMeshBuffers(gl, models.meshes.universe);
   modelLoad();
 }
 function modelLoad() {
-  //player= new Player(mult(mult(mat4(), translate(45,6.2,55)), scalem(0.01,0.01,0.01)), toCam);
   player= new Player(mult(mult(mat4(), translate(45,2.25,55)), scalem(0.01,0.01,0.01)), toCam, [0.01,0.01,0.01]);
   pole = new Gate(mat4());
   universe = new Universe(mult(mat4(), translate(0, 0,45)));
-  //map = new Road(mult(mat4(), translate(0, 1.75, 50)));
-
-  //zipzip = new Zipzip(models.meshes.zipzip, mult(mult(translate(45.2, 6.5, 40), rotateX(0)), rotateY(90)));
 
   things.push(player);
   things.push(pole);
   things.push(universe);
-  //things.push(zipzip);
 
   gameLoop();
 }
@@ -64,7 +57,6 @@ window.onload = function () {
   OBJ.downloadMeshes({
     'pole': 'models/direk.obj',
     'uppole': 'models/ustdirek.obj',
-    'block': 'models/maya.obj',
     'universe': 'models/universe.obj',
     'player': 'models/carsu.obj',
   }, initMeshes);
