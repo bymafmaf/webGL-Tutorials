@@ -23,6 +23,7 @@ function initMeshes(meshes){
   models.meshes = meshes;
   OBJ.initMeshBuffers(gl, models.meshes.player);
   OBJ.initMeshBuffers(gl, models.meshes.brick);
+  OBJ.initMeshBuffers(gl, models.meshes.rotatedBrick);
   OBJ.initMeshBuffers(gl, models.meshes.pole);
   OBJ.initMeshBuffers(gl, models.meshes.uppole);
   OBJ.initMeshBuffers(gl, models.meshes.universe);
@@ -41,6 +42,10 @@ function modelLoad() {
   var brick = new Brick(mult(mat4(), translate(0,2,0)));
   collisionActives.push(brick);
   things.push(brick);
+
+  var brick2 = new Brick(mult(mat4(), translate(0,2,0)), true);
+  collisionActives.push(brick2);
+  things.push(brick2);
 
   gameLoop();
 }
@@ -66,7 +71,8 @@ window.onload = function () {
     'uppole': 'models/ustdirek.obj',
     'universe': 'models/universe.obj',
     'player': 'models/carsu.obj',
-    'brick': 'models/brick.obj'
+    'brick': 'models/brick.obj',
+    'rotatedBrick': 'models/rotatedBrick.obj'
   }, initMeshes);
 }
 
