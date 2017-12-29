@@ -26,7 +26,7 @@ class GameObject
     }
   }
 
-  initBoundingBox(){
+  initBoundingBox(scaleFactor){
     this.boundingBox = {
       minX : Number.MAX_VALUE,
       minY : Number.MAX_VALUE,
@@ -59,6 +59,13 @@ class GameObject
         this.boundingBox.minZ = this.mesh.vertices[i+2];
       }
     }
+    this.boundingBox.maxX *= scaleFactor[0];
+    this.boundingBox.maxY *= scaleFactor[1];
+    this.boundingBox.maxZ *= scaleFactor[2];
+
+    this.boundingBox.minX *= scaleFactor[0];
+    this.boundingBox.minY *= scaleFactor[1];
+    this.boundingBox.minZ *= scaleFactor[2];
   }
 
   draw(cameraPos, lightPos, viewProjection, model){

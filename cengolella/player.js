@@ -1,6 +1,6 @@
 class Player extends GameObject {
 
-  constructor(position, initialCameraPosition){
+  constructor(position, initialCameraPosition, scaleFactor){
     super(models.meshes.player, position, "textures/car.png");
     this.constantDirectionalAcceleration = 0.80;
     this.constantSteerAcceleration = 2.5;
@@ -16,7 +16,7 @@ class Player extends GameObject {
     this.steerMax = 5;
 
     this.lastCameraPosition = initialCameraPosition;
-    this.initBoundingBox();
+    this.initBoundingBox(scaleFactor);
   }
 
   getSpeed(){
@@ -93,6 +93,41 @@ class Player extends GameObject {
         this.spine = mult(this.spine, translate(0, 0, -this.constantDirectionalAcceleration));
       }
     }
+  }
+
+  checkCollision(otherObject){
+    var currentPosition = this.getPosition();
+    var minX = currentPosition[0] + this.boundingBox.minX;
+    var minY = currentPosition[1] + this.boundingBox.minY;
+    var minZ = currentPosition[2] + this.boundingBox.minZ;
+
+    var maxX = currentPosition[0] + this.boundingBox.maxX;
+    var maxY = currentPosition[1] + this.boundingBox.maxY;
+    var maxZ = currentPosition[2] + this.boundingBox.maxZ;
+
+    var otherObjectPosition = otherObject.getPosition();
+    var otherObjectVertices = otherObject.mesh.vertices;
+
+    for (var i = 0; i < otherObjectVertices.length; i += 3) {
+      if (
+      otherObjectVertices[i] + otherObjectPosition[0] < maxX &&
+      otherObjectVertices[i] + otherObjectPosition[0] > minX &&
+      otherObjectVertices[i+1] + otherObjectPosition[1] < maxY &&
+      otherObjectVertices[i+1] + otherObjectPosition[1] > minY &&
+      otherObjectVertices[i+2] + otherObjectPosition[2] < maxZ &&
+      otherObjectVertices[i+2] + otherObjectPosition[2] > minZ
+      ) {
+        this.bounceBack();
+        return;
+      }
+    }
+  }
+
+  bounceBack(){
+    this.spine = mult(this.spine, translate(0, 0, -this.spine[2][3] - 2));
+    //this.currentDirectionalAcceleration = 0;
+
+    console.log("bounce");
   }
 
   draw(cameraPos, lightPos, viewProjection){

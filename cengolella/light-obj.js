@@ -1,14 +1,13 @@
 var player;
-var plane;
 var block, speed;
-var pole, map, evren, zipzip;
+var pole, map, universe, zipzip;
 var models = {};
 var things = [];
 
 var lightPos = vec3(0, 250, 50);
 
 var at = vec3(0, 0, 0);
-var eye = vec3(0,2, 5.5);
+var eye = vec3(0,3, 5.5);
 var toCam = subtract(eye, at);
 var proj;
 var view;
@@ -26,22 +25,21 @@ function initMeshes(meshes){
   OBJ.initMeshBuffers(gl, models.meshes.block);
   OBJ.initMeshBuffers(gl, models.meshes.pole);
   OBJ.initMeshBuffers(gl, models.meshes.uppole);
-  OBJ.initMeshBuffers(gl, models.meshes.map);
   OBJ.initMeshBuffers(gl, models.meshes.universe);
   modelLoad();
 }
 function modelLoad() {
-  player= new Player(mult(mult(mat4(), translate(45,6.2,55)), scalem(0.01,0.01,0.01)), toCam);
+  //player= new Player(mult(mult(mat4(), translate(45,6.2,55)), scalem(0.01,0.01,0.01)), toCam);
+  player= new Player(mult(mult(mat4(), translate(45,2.25,55)), scalem(0.01,0.01,0.01)), toCam, [0.01,0.01,0.01]);
   pole = new Gate(mat4());
-  map = new Road(mult(mat4(), translate(0, 5.75, 50)));
-  evren = new Universe(mult(mult(mat4(), translate(0, 4,45)), scalem(1.05,1.05 ,1.1)));
+  universe = new Universe(mult(mat4(), translate(0, 0,45)));
+  //map = new Road(mult(mat4(), translate(0, 1.75, 50)));
 
   //zipzip = new Zipzip(models.meshes.zipzip, mult(mult(translate(45.2, 6.5, 40), rotateX(0)), rotateY(90)));
 
   things.push(player);
   things.push(pole);
-  things.push(map);
-  things.push(evren);
+  things.push(universe);
   //things.push(zipzip);
 
   gameLoop();
@@ -69,7 +67,6 @@ window.onload = function () {
     'block': 'models/maya.obj',
     'universe': 'models/universe.obj',
     'player': 'models/carsu.obj',
-    'map': 'models/textured-map.obj'
   }, initMeshes);
 }
 
@@ -87,6 +84,9 @@ const gameLoop = function (clock) {
     clock *= 0.001;
     timeNode.nodeValue = clock.toFixed(2);
     spe.nodeValue = speed.toFixed(2);
+
+    player.checkCollision(universe);
+
     for (let object of things) {
       object.draw(eye, lightPos, mult(proj,view));
     }
