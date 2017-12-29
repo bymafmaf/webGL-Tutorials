@@ -126,6 +126,14 @@ class Player extends GameObject {
     console.log("bounce");
   }
 
+  changeToLowRes(){
+    this.mesh = models.meshes.lowplayer;
+  }
+
+  changeToHighRes(){
+    this.mesh = models.meshes.player;
+  }
+
   draw(cameraPos, lightPos, viewProjection){
 
     this.applySteering();

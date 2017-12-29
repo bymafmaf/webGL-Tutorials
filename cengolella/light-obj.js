@@ -1,4 +1,4 @@
-var player;
+var player, sphere;
 var block, speed;
 var models = {};
 var things = [];
@@ -29,6 +29,7 @@ function initMeshes(meshes){
   OBJ.initMeshBuffers(gl, models.meshes.universe);
   OBJ.initMeshBuffers(gl, models.meshes.lowsphere);
   OBJ.initMeshBuffers(gl, models.meshes.highsphere);
+  OBJ.initMeshBuffers(gl, models.meshes.lowplayer);
   modelLoad();
 }
 function modelLoad() {
@@ -62,7 +63,7 @@ function modelLoad() {
   collisionActives.push(brick6);
   things.push(brick6);
 
-  var sphere = new Zipzip(mult(mat4(), translate(0, 3, 45)));
+  sphere = new Zipzip(mult(mat4(), translate(0, 3, 45)));
   collisionActives.push(sphere);
   things.push(sphere);
   gameLoop();
@@ -92,7 +93,8 @@ window.onload = function () {
     'brick': 'models/brick.obj',
     'rotatedBrick': 'models/rotatedBrick.obj',
     'lowsphere': 'models/lowres-sphere.obj',
-    'highsphere': 'models/highres-sphere.obj'
+    'highsphere': 'models/highres-sphere.obj',
+    'lowplayer': 'models/lowres-carsu.obj'
   }, initMeshes);
 }
 
@@ -127,7 +129,7 @@ const gameLoop = function (clock) {
 }
 
 document.onkeydown = function(key){
-  //console.log(key.keyCode);
+  console.log(key.keyCode);
 
   if (key.keyCode == 39) {
     player.leftDown();
@@ -140,6 +142,14 @@ document.onkeydown = function(key){
   }
   else if (key.keyCode == 40) {
     player.downDown();
+  }
+  else if (key.keyCode == 76){
+    player.changeToLowRes();
+    sphere.changeToLowRes();
+  }
+  else if (key.keyCode == 72){
+    player.changeToHighRes();
+    sphere.changeToHighRes();
   }
 }
 

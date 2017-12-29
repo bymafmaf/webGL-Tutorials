@@ -18,6 +18,14 @@ class Zipzip extends GameObject {
     }
   }
 
+  changeToLowRes(){
+    this.mesh = models.meshes.lowsphere;
+  }
+
+  changeToHighRes(){
+    this.mesh = models.meshes.highsphere;
+  }
+
   draw(cameraPos, lightPos, viewProjection){
     this.movingY();
     super.draw(cameraPos, lightPos, viewProjection);
