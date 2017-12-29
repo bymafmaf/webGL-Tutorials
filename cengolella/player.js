@@ -58,8 +58,6 @@ class Player extends GameObject {
   }
 
   applyDirectionalMove(){
-
-
     if (this.currentDirectionalAcceleration > 0){
       if (!this.forwardMaxAchieved) {
         this.spine = mult(this.spine, translate(0, 0, -this.currentDirectionalAcceleration));
@@ -124,9 +122,7 @@ class Player extends GameObject {
   }
 
   bounceBack(){
-    this.spine = mult(this.spine, translate(0, 0, -this.spine[2][3] - 2));
-    //this.currentDirectionalAcceleration = 0;
-
+    this.spine = mult(this.spine, translate(0, 0, 3));
     console.log("bounce");
   }
 

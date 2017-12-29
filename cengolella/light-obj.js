@@ -39,13 +39,29 @@ function modelLoad() {
   var universe = new Universe(mult(mat4(), translate(0, 0,45)));
   things.push(universe);
 
-  var brick = new Brick(mult(mat4(), translate(0,2,0)));
+  var brick = new Brick(mult(mat4(), translate(-30,2,40)));
   collisionActives.push(brick);
   things.push(brick);
 
-  var brick2 = new Brick(mult(mat4(), translate(0,2,0)), true);
+  var brick2 = new Brick(mult(mat4(), translate(30,2,40)));
   collisionActives.push(brick2);
   things.push(brick2);
+
+  var brick3 = new Brick(mult(mat4(), translate(-45,2,50)), true);
+  collisionActives.push(brick3);
+  things.push(brick3);
+
+  var brick4 = new Brick(mult(mat4(), translate(20,2,30)), true);
+  collisionActives.push(brick4);
+  things.push(brick4);
+
+  var brick5 = new Brick(mult(mat4(), translate(-20,2,0)), true);
+  collisionActives.push(brick5);
+  things.push(brick5);
+
+  var brick6 = new Brick(mult(mat4(), translate(-25,2,20)));
+  collisionActives.push(brick6);
+  things.push(brick6);
 
   gameLoop();
 }
