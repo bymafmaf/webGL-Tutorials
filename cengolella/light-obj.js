@@ -7,7 +7,7 @@ var collisionActives = [];
 var lightPos = vec3(0, 50, 75);
 
 var at = vec3(0, 0, 0);
-var eye = vec3(0,30, 30);
+var eye = vec3(0,8, 12);
 var toCam = subtract(eye, at);
 var proj;
 var view;
@@ -32,7 +32,7 @@ function initMeshes(meshes){
   modelLoad();
 }
 function modelLoad() {
-  player= new Player(mult(mult(mat4(), translate(45,2.25,80)), scalem(0.05,0.05,0.05)), toCam, [0.05,0.05,0.05]);
+  player= new Player(mult(mult(mat4(), translate(0,2.25,90)), scalem(0.05,0.05,0.05)), toCam, [0.05,0.05,0.05]);
   things.push(player);
 
   var pole = new Gate(mult(mat4(), translate(0, 0, -10)));
@@ -63,6 +63,7 @@ function modelLoad() {
   things.push(brick6);
 
   var sphere = new Zipzip(mult(mat4(), translate(0, 3, 45)));
+  collisionActives.push(sphere);
   things.push(sphere);
   gameLoop();
 }
