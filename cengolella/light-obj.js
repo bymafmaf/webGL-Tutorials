@@ -1,12 +1,13 @@
-var player, pole, universe;
+var player;
 var block, speed;
 var models = {};
 var things = [];
+var collisionActives = [];
 
 var lightPos = vec3(0, 250, 50);
 
 var at = vec3(0, 0, 0);
-var eye = vec3(0,3, 5.5);
+var eye = vec3(0,7, 13);
 var toCam = subtract(eye, at);
 var proj;
 var view;
@@ -21,19 +22,25 @@ var GAME_SPEED = 1000;
 function initMeshes(meshes){
   models.meshes = meshes;
   OBJ.initMeshBuffers(gl, models.meshes.player);
+  OBJ.initMeshBuffers(gl, models.meshes.brick);
   OBJ.initMeshBuffers(gl, models.meshes.pole);
   OBJ.initMeshBuffers(gl, models.meshes.uppole);
   OBJ.initMeshBuffers(gl, models.meshes.universe);
   modelLoad();
 }
 function modelLoad() {
-  player= new Player(mult(mult(mat4(), translate(45,2.25,55)), scalem(0.01,0.01,0.01)), toCam, [0.01,0.01,0.01]);
-  pole = new Gate(mat4());
-  universe = new Universe(mult(mat4(), translate(0, 0,45)));
-
+  player= new Player(mult(mult(mat4(), translate(45,2.25,55)), scalem(0.05,0.05,0.05)), toCam, [0.05,0.05,0.05]);
   things.push(player);
+
+  var pole = new Gate(mat4());
   things.push(pole);
+
+  var universe = new Universe(mult(mat4(), translate(0, 0,45)));
   things.push(universe);
+
+  var brick = new Brick(mult(mat4(), translate(0,2,0)));
+  collisionActives.push(brick);
+  things.push(brick);
 
   gameLoop();
 }
@@ -59,6 +66,7 @@ window.onload = function () {
     'uppole': 'models/ustdirek.obj',
     'universe': 'models/universe.obj',
     'player': 'models/carsu.obj',
+    'brick': 'models/brick.obj'
   }, initMeshes);
 }
 
@@ -71,13 +79,15 @@ const gameLoop = function (clock) {
     at = player.getPosition();
     speed = player.getSpeed();
     view = lookAt(add(at, player.moveCamera()), at, [0, 1, 0]);
-    proj = perspective(60, screenSize[0] / screenSize[1], 0.2, 200);
+    proj = perspective(60, screenSize[0] / screenSize[1], 0.2, 300);
 
     clock *= 0.001;
     timeNode.nodeValue = clock.toFixed(2);
     spe.nodeValue = speed.toFixed(2);
 
-    player.checkCollision(universe);
+    for(let object of collisionActives){
+      player.checkCollision(object);
+    }
 
     for (let object of things) {
       object.draw(eye, lightPos, mult(proj,view));
