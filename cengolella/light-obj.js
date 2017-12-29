@@ -27,6 +27,8 @@ function initMeshes(meshes){
   OBJ.initMeshBuffers(gl, models.meshes.pole);
   OBJ.initMeshBuffers(gl, models.meshes.uppole);
   OBJ.initMeshBuffers(gl, models.meshes.universe);
+  OBJ.initMeshBuffers(gl, models.meshes.lowsphere);
+  OBJ.initMeshBuffers(gl, models.meshes.highsphere);
   modelLoad();
 }
 function modelLoad() {
@@ -55,14 +57,12 @@ function modelLoad() {
   collisionActives.push(brick4);
   things.push(brick4);
 
-  var brick5 = new Brick(mult(mat4(), translate(-20,2,0)), true);
-  collisionActives.push(brick5);
-  things.push(brick5);
-
-  var brick6 = new Brick(mult(mat4(), translate(-25,2,20)));
+  var brick6 = new Brick(mult(mat4(), translate(-2,2,20)));
   collisionActives.push(brick6);
   things.push(brick6);
 
+  var sphere = new Zipzip(mult(mat4(), translate(0, 3, 45)));
+  things.push(sphere);
   gameLoop();
 }
 window.onload = function () {
@@ -88,7 +88,9 @@ window.onload = function () {
     'universe': 'models/universe.obj',
     'player': 'models/carsu.obj',
     'brick': 'models/brick.obj',
-    'rotatedBrick': 'models/rotatedBrick.obj'
+    'rotatedBrick': 'models/rotatedBrick.obj',
+    'lowsphere': 'models/lowres-sphere.obj',
+    'highsphere': 'models/highres-sphere.obj'
   }, initMeshes);
 }
 
